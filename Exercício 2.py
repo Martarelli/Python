@@ -49,10 +49,16 @@ custol = latas*80
 custog = galao*25
 
 clts = ls//18
+
 if clts % 18 > 0:
     cgl = 1
 
-cec = clts*80 + cgl*25     #cec= custo economico     clts=custo latas    cgl=custo galao
+
+#cec= custo economico     clts=custo latas    cgl=custo galao
+
+cec = int(clts*80 + cgl*25)
+
+
 
 print(ls)
 print("Você vai precisar de",ls,"litros de tinta")
