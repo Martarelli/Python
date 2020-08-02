@@ -10,6 +10,8 @@ f2 = 0
 prof = 0
 nl = 0
 np = 0
+carga = 0
+cond = ''
 
 
 def recebe_estaca():
@@ -18,10 +20,6 @@ def recebe_estaca():
     check = True
     while check:
         global diam, estaca, f1, f2
-
-        diam = float(input("Qual o diâmetro da estaca?(m): "))
-        while diam <= 0:
-            diam = float(input("O diâmetro tem que ser maior do que 0!\nQual o diâmetro da estaca?(m): "))
 
         print('Franki(F), Metalica(M), Pre_Moldada(PM), Escavada(E), Raiz, Hélice Continua ou Ômega(RHO)')
         estaca = input("Qual o tipo de estaca a ser utilizada?: ").upper()
@@ -126,44 +124,61 @@ def recebe_solo():
 
 def calculo():
     """REALIZA O CALCULO DE RESISTENCIA"""
-    global prof, nl, np
-    prof = float(input("Qual o a profundidade da estaca?(m): "))
-    while prof <= 0:
-        prof = float(input("A profundidade tem que ser maior do que 0!\nQual o a profundidade da estaca?(m): "))
-    nl = float(input("Qual o valor do Nspt da camada a ser avaliada?: "))
-    while nl <= 0:
-        nl = float(input("O valor de NL tem que ser maior do que 0!\nQual o valor do Nspt da camada a ser avaliada?: "))
-    np = float(input("Qual o valor do Nspt da camada de apoio da ponta da estaca?: "))
-    while np <= 0:
-        np = float(input("O valor de NP tem que ser maior do que 0!\nQual o valor do Nspt da camada de apoio da ponta "
-                         "da estaca?: "))
 
-    ap = (math.pi*(math.pow(diam, 2)))/4
-    u = math.pi*diam
-    rl = (u/f2)*(k*alfa*nl*prof)
-    rp = (k*np*ap)/f1
-    rt = rl+rp
-    ta = rt/2
-    tatf = ta/10
+    ap = (math.pi * (math.pow(diam, 2))) / 4
+    u = math.pi * diam
+    rl = (u / f2) * (k * alfa * nl * prof)
+    rp = (k * np * ap) / f1
+    rt = rl + rp
+    ta = rt / 2
+    tatf = ta / 10
 
-    carga = float(input("Qual a solicitada na estaca?(tf): "))
-    while carga <= 0:
-        carga = float(input("A carga tem que ser maior do que 0!\nQual a solicitada na estaca?(tf): "))
-
-    calc_est = carga/tatf
+    calc_est = carga / tatf
 
     if calc_est == 1:
-        print('Cada estaca suporta %.3f(tf), Desse modo, será necessária %f estaca para a carga solicitada'%(tatf,math.ceil(calc_est)))
+        print('Cada estaca suporta %.3f(tf), Desse modo, será necessária %f estaca para a carga solicitada' % (
+            tatf, math.ceil(calc_est)))
     else:
-        print('Cada estaca suporta %.3f(tf), Desse modo, Serão necessárias %i estacas para a carga solicitada'%(tatf,math.ceil(calc_est)))
+        print('Cada estaca suporta %.3f(tf), Desse modo, Serão necessárias %i estacas para a carga solicitada' % (
+            tatf, math.ceil(calc_est)))
+
+
 def main():
     """FUNÇÃO PRINCIPAL DO SISTEMA"""
     print("SEJA BEM VINDO A CALCULADORA DE ESTACAS ELABORADA POR: ENG° RENAN MARTARELLI")
 
-    recebe_solo()
-    recebe_estaca()
-    calculo()
+    global diam, prof, nl, np, carga, cond
+    rodando = True
+    while rodando:
+        diam = float(input("Qual o diâmetro da estaca?(m): "))
+        while diam <= 0:
+            diam = float(input("O diâmetro tem que ser maior do que 0!\nQual o diâmetro da estaca?(m): "))
+        recebe_estaca()
+        recebe_solo()
 
+        prof = float(input("Qual o a profundidade da estaca?(m): "))
+        while prof <= 0:
+            prof = float(input("A profundidade tem que ser maior do que 0!\nQual o a profundidade da estaca?(m): "))
+        nl = float(input("Qual o valor do Nspt da camada a ser avaliada?: "))
+        while nl <= 0:
+            nl = float(
+                input("O valor de NL tem que ser maior do que 0!\nQual o valor do Nspt da camada a ser avaliada?: "))
+        np = float(input("Qual o valor do Nspt da camada de apoio da ponta da estaca?: "))
+        while np <= 0:
+            np = float(
+                input("O valor de NP tem que ser maior do que 0!\nQual o valor do Nspt da camada de apoio da ponta "
+                      "da estaca?: "))
+        carga = float(input("Qual carga a solicitada na estaca?(tf): "))
+        while carga <= 0:
+            carga = float(input("A carga tem que ser maior do que 0!\nQual a solicitada na estaca?(tf): "))
+        calculo()
+        cond = input('Você deseja trocar algum dado(T) ou sair(S): ').upper()
+        if cond == 'S':
+            break
+        elif cond == 'T':
+            break
+        else:
+            cond = input('Opção Inválida!!!\nVocê deseja trocar algum dado(T) ou sair(S): ')
 
 
 main()
