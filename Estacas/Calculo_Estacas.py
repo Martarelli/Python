@@ -1,10 +1,8 @@
 import math
+from Estacas.datas import *
 
-solo = ''
 k = 0
 alfa = 0
-diam = 0
-estaca = ''
 f1 = 0
 f2 = 0
 prof = 0
@@ -19,30 +17,19 @@ def recebe_estaca():
 
     check = True
     while check:
-        global diam, estaca, f1, f2
+        global diam, f1, f2
 
         print('Franki(F), Metalica(M), Pre_Moldada(PM), Escavada(E), Raiz, Hélice Continua ou Ômega(RHO)')
-        estaca = input("Qual o tipo de estaca a ser utilizada?: ").upper()
+        est = input("Qual o tipo de estaca a ser utilizada?: ").upper()
 
-        if estaca == 'F':  # Franki = [2.50, 5.00]
-            f1 = 2.50
-            f2 = 5
+        if est == "F" or est == "M" or est == "E" or est == "RHO":
+            estesc = estaca[est]
+            f1 = estesc[0]
+            f2 = 2*f1
             check = False
-        elif estaca == 'M':  # Metalica = [1.75, 3.50]
-            f1 = 1.75
-            f2 = 3.50
-            check = False
-        elif estaca == 'PM':  # Pre_Moldada = [1+(diam/0,8), 2f1]
+        elif est == "PM":
             f1 = 1 + (diam / 0.8)
-            f2 = 2 * f1
-            check = False
-        elif estaca == 'E':  # Escavada = [3.00, 6.00]
-            f1 = 1.75
-            f2 = 3.50
-            check = False
-        elif estaca == 'RHO':  # Raiz, Hélice Continua ou Ômega = [2, 4]
-            f1 = 2.00
-            f2 = 4.00
+            f2 = 2*f1
             check = False
         else:
             print('Entrada inválida!')
@@ -52,74 +39,23 @@ def recebe_solo():
     """ATRIBUI OS VALORES DE K E RAZÃO DE ATRITO α PARA O TIPO DE SOLO"""
     check = True
     while check:
-        global solo, k, alfa
+        global k, alfa
         print('AREIAS -> Areia(A), Areia Siltosa(AS), Areia Silto Argilosa(ASA), Areia Argilosa(AA), Areia Argilo '
               'Siltosa(AAS)\nSILTES -> Silte(S), Silte Arenoso(SA), Silte Areno Argiloso(SAA), Silte Argiloso(SC), '
               'Silte Argilo Arenoso(SCA)\nARGILAS -> Argila(C), Argila Arenosa(CA), Argila Areno Siltosa(CAS), '
               'Argila Siltosa(CS), Argila Silto Arenosa(CSA)')
-        solo = (input("Qual o tipo de solo do terreno?: ").upper())
-        if solo == 'A':
-            k = 1000
-            alfa = 0.014
-            check = False
-        elif solo == 'AS':  # AS = (800, 0.02)
-            k = 800
-            alfa = 0.02
-            check = False
-        elif solo == 'ASA':  # ASA = (700, 0.024)
-            k = 700
-            alfa = 0.024
-            check = False
-        elif solo == 'AA':  # AA = (600, 0.028)
-            k = 600
-            alfa = 0.028
-            check = False
-        elif solo == 'AAS':  # AAS = (500, 0.03)
-            k = 500
-            alfa = 0.03
-            check = False
-        elif solo == 'S':  # S = (400, 0.03)
-            k = 400
-            alfa = 0.03
-            check = False
-        elif solo == 'SA':  # SA = (550, 0.022)
-            k = 550
-            alfa = 0.022
-            check = False
-        elif solo == 'SAA':  # SAA = (450, 0.028)
-            k = 450
-            alfa = 0.028
-            check = False
-        elif solo == 'SC':  # SC = (230, 0.034)
-            k = 230
-            alfa = 0.034
-            check = False
-        elif solo == 'SCA':  # SCA = (250, 0.03)
-            k = 250
-            alfa = 0.03
-            check = False
-        elif solo == 'C':  # C = (200, 0.06)
-            k = 200
-            alfa = 0.06
-            check = False
-        elif solo == 'CA':  # CA = (350, 0.024)
-            k = 350
-            alfa = 0.024
-            check = False
-        elif solo == 'CAS':  # CAS = (300, 0.028)
-            k = 300
-            alfa = 0.028
-            check = False
-        elif solo == 'CS':  # CS = (220, 0.04)
-            k = 220
-            alfa = 0.04
-            check = False
-        elif solo == 'CSA':  # CSA = (330, 0.03)
-            k = 330
-            alfa = 0.03
+        solo_escolha = input("Qual o tipo de solo do terreno?: ").upper()
+
+        if solo_escolha == 'A' or solo_escolha == 'AS' or solo_escolha == 'ASA' or solo_escolha == 'AA' or\
+                solo_escolha == 'AAS' or solo_escolha == 'S' or solo_escolha == 'SA' or solo_escolha == 'SAA' or\
+                solo_escolha == 'SC' or solo_escolha == 'SCA'or solo_escolha == 'C'or solo_escolha == 'CA' or\
+                solo_escolha == 'CAS' or solo_escolha == 'CS' or solo_escolha == 'CSA':
+            se = solo[solo_escolha]
+            k = se[0]
+            alfa = se[1]
             check = False
         else:
-            print('Entrada inválida')
+            print('Entrada inválida" Tente novamente')
 
 
 def calculo():
@@ -179,6 +115,7 @@ def main():
             break
         else:
             cond = input('Opção Inválida!!!\nVocê deseja trocar algum dado(T) ou sair(S): ')
+
 
 
 main()
